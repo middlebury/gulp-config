@@ -5,12 +5,13 @@ const merge = require('lodash.merge');
 const { createConfig } = require('./create-gulp-config');
 
 const createJekyllConfig = (options) => {
-  const jekyllOpts = ['build'];
-
   const jekyll = (done) => {
-    if (!process.env.NODE_ENV === 'production') {
+    const jekyllOpts = ['build'];
+
+    if (process.env.NODE_ENV !== 'production') {
       jekyllOpts.push('--baseurl', '');
     }
+
     return cp
       .spawn('jekyll', jekyllOpts, {
         stdio: 'inherit'

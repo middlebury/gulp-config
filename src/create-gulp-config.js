@@ -23,7 +23,7 @@ const dist = (parts = '') => path.resolve(cwd(), DIST_DIR, parts);
 const src = (parts) => path.resolve(cwd(), SOURCE_DIR, parts);
 
 const defaultOptions = {
-  dist: dist(),
+  clean: dist(),
   styles: {
     src: src('scss/*.scss'),
     watch: src('scss/**/*.scss'),
@@ -62,7 +62,7 @@ const log = (...args) => console.info(...args);
 function createConfig(options = {}) {
   const config = merge({}, defaultOptions, options);
 
-  const clean = () => del(config.dist);
+  const clean = () => del(config.clean);
 
   const serve = () => browserSync.init(config.browserSyncOptions);
 

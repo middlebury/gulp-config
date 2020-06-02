@@ -13,5 +13,7 @@ module.exports = () => {
     plugins.push(cssnano(), combineMediaQuery());
   }
 
-  return plugins;
+  return {
+    plugins
+  };
 };

@@ -44,7 +44,7 @@ const createJekyllConfig = (options) => {
     }
   };
 
-  const config = merge({}, options, jekyllOptions);
+  const config = merge({}, jekyllOptions, options);
 
   return createConfig(config);
 };

@@ -1,3 +1,3 @@
-const { createJekyllConfig } = require('../../jekyll');
+const { createJekyllConfig } = require('../../src');
 
 module.exports = createJekyllConfig();

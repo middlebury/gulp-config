@@ -25,8 +25,8 @@ const src = (parts) => path.resolve(cwd(), SOURCE_DIR, parts);
 const defaultOptions = {
   dist: dist(),
   styles: {
-    src: src('{scss,css}/index.{scss,css}'),
-    watch: src('scss,css}/**/*.{scss,css}'),
+    src: src('scss/*.scss'),
+    watch: src('scss/**/*.scss'),
     dest: dist('css')
   },
   scripts: {

@@ -168,3 +168,4 @@ function createConfig(options = {}) {
   };
 }
 
+module.exports = { createConfig };

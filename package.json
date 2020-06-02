@@ -1,5 +1,5 @@
 {
-  "name": "@middlebury/gulp-config",
+  "name": "middlebury-gulp-config",
   "version": "0.1.0",
   "description": "Middlebury shared gulp configuration with optional config for jekyll usage",
   "main": "src/index.js",

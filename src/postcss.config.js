@@ -4,9 +4,9 @@ const combineMediaQuery = require('postcss-combine-media-query');
 
 const browserlist = require('./browserslist-config');
 
-const { PROD } = require('./index');
-
 module.exports = () => {
+  const PROD = process.env.NODE_ENV === 'production';
+
   const plugins = [autoprefixer(browserlist)];
 
   if (PROD) {

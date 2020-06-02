@@ -22,8 +22,6 @@ const SOURCE_DIR = 'src';
 const dist = (parts = '') => path.resolve(cwd(), DIST_DIR, parts);
 const src = (parts) => path.resolve(cwd(), SOURCE_DIR, parts);
 
-const PROD = process.env.NODE_ENV === 'production';
-
 const defaultOptions = {
   dist: dist(),
   styles: {
@@ -93,7 +91,7 @@ function createConfig(options = {}) {
         bundle.write({
           file: dest,
           format: 'iife',
-          sourcemap: !PROD
+          sourcemap: !process.env.NODE_ENV === 'production'
         })
       )
       .then(() => {
@@ -149,13 +147,19 @@ function createConfig(options = {}) {
     ...config.afterBuild
   ];
 
+  const setProd = () => {
+    log('Setting production flag');
+    process.env.NODE_ENV = 'production';
+    return Promise.resolve();
+  };
+
   const build = gulp.series(clean, buildTasks, reportFilesizes);
 
   const dev = gulp.parallel(serve, build, watch);
 
   return {
     dev,
-    build,
+    build: gulp.series(setProd, build),
     clean,
     scripts,
     styles,
@@ -164,4 +168,3 @@ function createConfig(options = {}) {
   };
 }
 
-module.exports = { createConfig, PROD };

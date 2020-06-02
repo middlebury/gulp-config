@@ -2,16 +2,15 @@ const browserSync = require('browser-sync');
 const cp = require('child_process');
 const merge = require('lodash.merge');
 
-const { createConfig, PROD } = require('./create-gulp-config');
+const { createConfig } = require('./create-gulp-config');
 
 const createJekyllConfig = (options) => {
   const jekyllOpts = ['build'];
 
-  if (!PROD) {
-    jekyllOpts.push('--baseurl', '');
-  }
-
   const jekyll = (done) => {
+    if (!process.env.NODE_ENV === 'production') {
+      jekyllOpts.push('--baseurl', '');
+    }
     return cp
       .spawn('jekyll', jekyllOpts, {
         stdio: 'inherit'

@@ -22,7 +22,7 @@ const createJekyllConfig = (options) => {
   };
 
   const jekyllOptions = {
-    dist: './_site',
+    clean: ['./_site', './css/', './js/'],
     scripts: {
       src: './_js/index.js',
       dest: './js/bundle.js',

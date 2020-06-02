@@ -1,0 +1,14 @@
+title: Middlebury Gulp Jekyll Site
+description: Velit ad ea consequat eu sit consectetur esse et sunt deserunt do eiusmod dolore incididunt.
+baseurl: '/example-site'
+
+markdown: kramdown
+exclude:
+  - node_modules
+  - package.json
+  - package-lock.json
+  - gulpfile.js
+  - yarn.lock
+  - README.md
+  - src
+  - '*.log'

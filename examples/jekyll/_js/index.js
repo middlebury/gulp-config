@@ -1,1 +1,3 @@
-export const hello = 'hello world';
+const hello = require('./hello.js');
+
+hello('world');

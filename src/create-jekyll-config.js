@@ -31,8 +31,8 @@ const createJekyllConfig = (options) => {
     },
     styles: {
       src: './_scss/main.scss',
-      watch: './_scss/**/*.scss',
-      dest: './css'
+      dest: './css',
+      watch: './_scss/**/*.scss'
     },
     browserSyncOptions: {
       server: {

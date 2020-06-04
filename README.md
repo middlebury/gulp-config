@@ -4,7 +4,7 @@
 
 ## Requirements
 
-- Node.js >=14
+- Node.js >=12
 
 ## Getting started
 

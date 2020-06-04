@@ -13,6 +13,8 @@ const twig = require('gulp-twig');
 const yaml = require('js-yaml');
 const glob = require('glob');
 const plumber = require('gulp-plumber');
+const sourcemaps = require('gulp-sourcemaps');
+const gulpIf = require('gulp-if');
 
 const { rollup } = require('rollup');
 const rollupConfig = require('./rollup.config');
@@ -101,6 +103,8 @@ const parseData = (dataPaths) => {
 function createConfig(options = {}) {
   const config = merge({}, defaultOptions, options);
 
+  const PROD = process.env.NODE_ENV === 'production';
+
   const clean = () => del(config.clean);
 
   const serve = () => browserSync.init(config.browserSyncOptions);
@@ -110,8 +114,10 @@ function createConfig(options = {}) {
       .src(config.styles.src, {
         allowEmpty: true
       })
+      .pipe(gulpIf(!PROD, sourcemaps.init()))
       .pipe(sass().on('error', sass.logError))
       .pipe(postcss(postcssConfig))
+      .pipe(gulpIf(!PROD, sourcemaps.write('./')))
       .pipe(gulp.dest(config.styles.dest));
   };
 
@@ -130,7 +136,7 @@ function createConfig(options = {}) {
         bundle.write({
           file: dest,
           format: 'iife',
-          sourcemap: !process.env.NODE_ENV === 'production'
+          sourcemap: !PROD
         })
       )
       .then(() => {

@@ -33,6 +33,11 @@ const createJekyllConfig = (options) => {
       dest: './js/bundle.js',
       watch: './_js/**/*.js'
     },
+    images: {
+      src: './_img/*.{png,svg,jpg}',
+      watch: './_img/*.{png,svg,jpg}',
+      dest: './img/'
+    },
     styles: {
       src: './_scss/main.scss',
       dest: './css',
@@ -47,6 +52,7 @@ const createJekyllConfig = (options) => {
     watch: (watch) => {
       watch(['./css/*.css'], copyFiles('./css/*.css', './_site/css/'));
       watch(['./js/*.js'], copyFiles('./js/*.js', './_site/js/'));
+      watch(['./img/*'], copyFiles('./img/*', './_site/img/'));
       // copy rebuilt files to site folder and stream them on change
       watch(['**/*.{html,md,yml}', '!_site/**'], jekyll);
     }

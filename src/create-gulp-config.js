@@ -207,11 +207,11 @@ function createConfig(options = {}) {
     }
   };
 
-  let buildTasks = [
+  const buildTasks = gulp.series([
     ...config.beforeBuild,
     gulp.parallel(html, styles, scripts, images),
     ...config.afterBuild
-  ];
+  ]);
 
   const setProd = () => {
     log('Setting production flag');

@@ -8,6 +8,11 @@ const postcss = require('gulp-postcss');
 const imagemin = require('gulp-imagemin');
 const size = require('gulp-size');
 const sass = require('gulp-sass');
+const data = require('gulp-data');
+const twig = require('gulp-twig');
+const yaml = require('js-yaml');
+const glob = require('glob');
+const plumber = require('gulp-plumber');
 
 const { rollup } = require('rollup');
 const rollupConfig = require('./rollup.config');
@@ -47,10 +52,20 @@ const defaultOptions = {
     },
     ghostMode: false
   },
-  html: {
-    src: src('html'),
-    watch: src('html'),
-    dist: dist('html')
+  data: {
+    src: src('data/**/*.yml'),
+    watch: src('data/**/*.yml'),
+    parser: yaml
+  },
+  twig: {
+    src: src('twig/**/*.twig'),
+    watch: src('twig/**/*.twig'),
+    dest: dist(),
+    parser: twig,
+    parserOptions: {
+      base: src('twig'),
+      filters: []
+    }
   },
   postcssPlugins: [],
   afterBuild: [],
@@ -58,6 +73,30 @@ const defaultOptions = {
 };
 
 const log = (...args) => console.info(...args);
+const errorHandler = function (err) {
+  log(`Gulp error in ${err.plugin}
+    ---
+    ${err.toString()}
+  `);
+  this.emit('end');
+};
+
+const parseData = (dataPaths) => {
+  const files = glob.sync(dataPaths);
+
+  const contents = files.map((path) => fs.readFileSync(path, 'utf8'));
+
+  const parsedYaml = contents.map((content) => yaml.safeLoad(content));
+
+  const data = parsedYaml.reduce((obj, data) => {
+    return {
+      ...obj,
+      ...data
+    };
+  }, {});
+
+  return data;
+};
 
 function createConfig(options = {}) {
   const config = merge({}, defaultOptions, options);
@@ -113,6 +152,21 @@ function createConfig(options = {}) {
       )
       .pipe(gulp.dest(config.images.dest))
       .pipe(browserSync.stream());
+  };
+
+  const html = () => {
+    return gulp
+      .src(config.twig.src)
+      .pipe(
+        plumber({
+          errorHandler
+        })
+      )
+      .pipe(data(parseData(config.data.src)))
+      .pipe(config.twig.parser(config.twig.parserOptions))
+      .pipe(gulp.dest(config.twig.dest))
+      .pipe(browserSync.stream());
+  };
 
   const reportFilesizes = () =>
     gulp
@@ -135,6 +189,11 @@ function createConfig(options = {}) {
     gulp.watch(config.styles.watch, styles);
     gulp.watch(config.scripts.watch, scripts);
     gulp.watch(config.images.watch, images);
+    gulp.watch(config.twig.watch, html);
+
+    if (config.data) {
+      gulp.watch(config.data.watch, html);
+    }
 
     if (config.watch) {
       config.watch(gulp.watch);
@@ -143,7 +202,7 @@ function createConfig(options = {}) {
 
   let buildTasks = [
     ...config.beforeBuild,
-    gulp.parallel(styles, scripts, images),
+    gulp.parallel(html, styles, scripts, images),
     ...config.afterBuild
   ];
 

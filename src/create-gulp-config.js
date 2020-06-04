@@ -138,8 +138,8 @@ function createConfig(options = {}) {
       });
   };
 
-  const images = () =>
-    gulp
+  const images = () => {
+    return gulp
       .src(config.images.src)
       .pipe(
         imagemin([
@@ -168,8 +168,8 @@ function createConfig(options = {}) {
       .pipe(browserSync.stream());
   };
 
-  const reportFilesizes = () =>
-    gulp
+  const reportFilesizes = () => {
+    return gulp
       .src(dist('**/*.css'))
       .pipe(
         size({
@@ -184,6 +184,7 @@ function createConfig(options = {}) {
           showTotal: false
         })
       );
+  };
 
   const watch = () => {
     gulp.watch(config.styles.watch, styles);

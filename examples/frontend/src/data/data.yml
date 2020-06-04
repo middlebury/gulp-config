@@ -1,0 +1,11 @@
+key: value here
+items:
+  - item one
+  - item two
+  - item three
+
+site_title: Test title
+
+map:
+  some_key: true,
+  another_key: 3

@@ -10,9 +10,6 @@
   "files": [
     "src"
   ],
-  "scripts": {
-    "preinstall": "npx npm-force-resolutions"
-  },
   "dependencies": {
     "@babel/core": "^7.7.7",
     "@babel/plugin-proposal-class-properties": "^7.7.4",
@@ -44,9 +41,5 @@
     "rollup-plugin-filesize": "^6.2.1",
     "rollup-plugin-sizes": "^1.0.1",
     "rollup-plugin-uglify": "^6.0.4"
-  },
-  "resolutions": {
-    "http-proxy": "1.18.1",
-    "yargs-parser": "18.1.2"
   }
 }

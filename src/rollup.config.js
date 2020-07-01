@@ -1,5 +1,5 @@
-const babel = require('rollup-plugin-babel');
-const resolve = require('@rollup/plugin-node-resolve');
+const { babel } = require('@rollup/plugin-babel');
+const { nodeResolve } = require('@rollup/plugin-node-resolve');
 const commonJS = require('@rollup/plugin-commonjs');
 const { uglify } = require('rollup-plugin-uglify');
 const sizes = require('rollup-plugin-sizes');
@@ -29,7 +29,7 @@ module.exports = (input) => {
           '@babel/plugin-proposal-class-properties'
         ]
       }),
-      resolve(),
+      nodeResolve(),
       commonJS({
         // ignore importing optional momentjs, which comes with pikaday
         ignore: ['moment']

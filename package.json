@@ -5,7 +5,7 @@
     "access": "public"
   },
   "scripts": {
-    "preinstall": "npx npm-force-resolutions"
+    "force-resolutions": "npx npm-force-resolutions"
   },
   "description": "Middlebury shared gulp configuration with optional config for jekyll usage",
   "main": "src/index.js",

@@ -118,7 +118,8 @@ function createConfig(options = {}) {
       .pipe(sass().on('error', sass.logError))
       .pipe(postcss(postcssConfig))
       .pipe(gulpIf(!PROD, sourcemaps.write('./')))
-      .pipe(gulp.dest(config.styles.dest));
+      .pipe(gulp.dest(config.styles.dest))
+      .pipe(browserSync.stream());
   };
 
   const scripts = () => {

@@ -153,7 +153,7 @@ function createConfig(options = {}) {
           imagemin.mozjpeg({ progressive: true }),
           imagemin.optipng({ optimizationLevel: 5 }),
           imagemin.svgo({
-            plugins: [{ removeDimensions: true }, { cleanupIDs: false }]
+            plugins: [{ cleanupIDs: false }]
           })
         ])
       )

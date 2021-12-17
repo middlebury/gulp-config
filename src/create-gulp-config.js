@@ -7,7 +7,7 @@ const browserSync = require('browser-sync');
 const postcss = require('gulp-postcss');
 const imagemin = require('gulp-imagemin');
 const size = require('gulp-size');
-const sass = require('gulp-sass');
+const sass = require('gulp-sass')(require('node-sass'));
 const data = require('gulp-data');
 const twig = require('gulp-twig');
 const yaml = require('js-yaml');
@@ -88,7 +88,7 @@ const parseData = (dataPaths) => {
 
   const contents = files.map((path) => fs.readFileSync(path, 'utf8'));
 
-  const parsedYaml = contents.map((content) => yaml.safeLoad(content));
+  const parsedYaml = contents.map((content) => yaml.load(content));
 
   const data = parsedYaml.reduce((obj, data) => {
     return {

@@ -4,6 +4,7 @@ const commonJS = require('@rollup/plugin-commonjs');
 const { uglify } = require('rollup-plugin-uglify');
 const sizes = require('rollup-plugin-sizes');
 const filesize = require('rollup-plugin-filesize');
+const typescript = require('@rollup/plugin-typescript');
 
 const browsers = require('./browserslist-config');
 
@@ -30,8 +31,10 @@ module.exports = (input) => {
         ]
       }),
       nodeResolve(),
+      typescript({ module: 'CommonJS' }),
       commonJS({
         // ignore importing optional momentjs, which comes with pikaday
+        extension: ['.tsx', '.ts', '.js'],
         ignore: ['moment']
       }),
       PROD && uglify(),

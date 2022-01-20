@@ -25,10 +25,7 @@ module.exports = (input) => {
           ]
         ],
         plugins: [
-          ['@babel/transform-react-jsx', { 
-            "runtime": "automatic",
-            "importSource": "preact" 
-          }],
+          // ['@babel/transform-react-jsx', { pragma: 'h' }],
           '@babel/plugin-proposal-class-properties'
         ]
       }),

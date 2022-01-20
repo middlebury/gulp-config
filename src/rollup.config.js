@@ -31,7 +31,7 @@ module.exports = (input) => {
         ]
       }),
       nodeResolve(),
-      typescript({ module: 'CommonJS' }),
+      typescript({ module: 'ESNext' }),
       commonJS({
         // ignore importing optional momentjs, which comes with pikaday
         extension: ['.tsx', '.ts', '.js'],

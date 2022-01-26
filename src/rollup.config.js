@@ -1,4 +1,4 @@
-const { babel } = require('@rollup/plugin-babel');
+const { babel, getBabelInputPlugin } = require('@rollup/plugin-babel');
 const { nodeResolve } = require('@rollup/plugin-node-resolve');
 const commonJS = require('@rollup/plugin-commonjs');
 const { uglify } = require('rollup-plugin-uglify');
@@ -8,8 +8,13 @@ const typescript = require('@rollup/plugin-typescript');
 
 const browsers = require('./browserslist-config');
 
-module.exports = (input) => {
+module.exports = (input, ts) => {
   const PROD = process.env.NODE_ENV === 'production';
+  let tsBuild = [];
+
+  if(ts === true) {
+    tsBuild = [typescript({ module: 'ESNext' })];
+  }
 
   return {
     input,
@@ -31,7 +36,7 @@ module.exports = (input) => {
         ]
       }),
       nodeResolve(),
-      typescript({ module: 'ESNext' }),
+      ...tsBuild,
       commonJS({
         // ignore importing optional momentjs, which comes with pikaday
         extension: ['.tsx', '.ts', '.js'],

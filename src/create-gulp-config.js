@@ -71,7 +71,8 @@ const defaultOptions = {
   },
   postcssPlugins: [],
   afterBuild: [],
-  beforeBuild: []
+  beforeBuild: [],
+  typescriptBuild: false 
 };
 
 const log = (...args) => console.info(...args);
@@ -132,7 +133,7 @@ function createConfig(options = {}) {
 
     log(`Bundling scripts in ${src} with rollup`);
 
-    return rollup(rollupConfig(src))
+    return rollup(rollupConfig(src, config.typescriptBuild))
       .then((bundle) =>
         bundle.write({
           file: dest,

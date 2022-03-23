@@ -74,7 +74,8 @@ const defaultOptions = {
     ghostMode: false
   },
   afterBuild: [],
-  beforeBuild: []
+  beforeBuild: [],
+  typescriptBuild: false
 };
 ```
 

@@ -47,13 +47,15 @@
     "gulp-twig": "^1.2.0",
     "js-yaml": "^4.1.0",
     "lodash.merge": "^4.6.2",
+    "mqpacker": "^7.0.0",
     "node-sass": "^7.0.0",
     "postcss": "^8.4.5",
     "postcss-combine-media-query": "^1.0.1",
     "rollup": "^2.61.1",
     "rollup-plugin-filesize": "^9.1.1",
     "rollup-plugin-sizes": "^1.0.4",
-    "rollup-plugin-uglify": "^6.0.4"
+    "rollup-plugin-uglify": "^6.0.4",
+    "sort-css-media-queries": "^2.0.4"
   },
   "devDependencies": {
     "prettier": "^2.5.1"

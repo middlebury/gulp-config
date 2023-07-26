@@ -57,6 +57,7 @@ const defaultOptions = {
   data: {
     src: src('data/**/*.yml'),
     watch: src('data/**/*.yml'),
+    env: {},
     parser: yaml
   },
   twig: {
@@ -85,19 +86,23 @@ const errorHandler = function (err) {
 };
 
 const parseData = (dataPaths) => {
-  const files = glob.sync(dataPaths);
+  const files = glob.sync(dataPaths.src);
 
   const contents = files.map((path) => fs.readFileSync(path, 'utf8'));
 
   const parsedYaml = contents.map((content) => yaml.load(content));
-
+  
   const data = parsedYaml.reduce((obj, data) => {
     return {
       ...obj,
-      ...data
+      ...data,
+      env: {
+        production: process.env.NODE_ENV === 'production',
+        ...dataPaths.env
+      }
     };
   }, {});
-
+  
   return data;
 };
 
@@ -105,7 +110,7 @@ function createConfig(options = {}) {
   const config = merge({}, defaultOptions, options);
 
   const PROD = process.env.NODE_ENV === 'production';
-
+  
   const clean = () => del(config.clean);
 
   const serve = () => browserSync.init(config.browserSyncOptions);
@@ -170,7 +175,7 @@ function createConfig(options = {}) {
           errorHandler
         })
       )
-      .pipe(data(parseData(config.data.src)))
+      .pipe(data(parseData(config.data)))
       .pipe(config.twig.parser(config.twig.parserOptions))
       .pipe(gulp.dest(config.twig.dest))
       .pipe(browserSync.stream());

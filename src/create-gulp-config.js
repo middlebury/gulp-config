@@ -109,8 +109,8 @@ const parseData = (dataPaths) => {
 function createConfig(options = {}) {
   const config = merge({}, defaultOptions, options);
 
-  const PROD = process.env.NODE_ENV === 'production';
-  
+  let PROD = false;
+
   const clean = () => del(config.clean);
 
   const serve = () => browserSync.init(config.browserSyncOptions);
@@ -223,6 +223,8 @@ function createConfig(options = {}) {
   const setProd = () => {
     log('Setting production flag');
     process.env.NODE_ENV = 'production';
+    PROD = process.env.NODE_ENV === 'production';
+
     return Promise.resolve();
   };
 

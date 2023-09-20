@@ -1,26 +1,28 @@
-const path = require('path');
-const fs = require('fs');
-const merge = require('lodash.merge');
-const gulp = require('gulp');
-const del = require('del');
-const browserSync = require('browser-sync');
-const postcss = require('gulp-postcss');
-const imagemin = require('gulp-imagemin');
-const size = require('gulp-size');
-const sass = require('gulp-sass')(require('node-sass'));
-const data = require('gulp-data');
-const twig = require('gulp-twig');
-const yaml = require('js-yaml');
-const glob = require('glob');
-const plumber = require('gulp-plumber');
-const sourcemaps = require('gulp-sourcemaps');
-const gulpIf = require('gulp-if');
+import path from 'node:path';
+import fs from 'node:fs';
+import merge from 'lodash.merge';
+import gulp from 'gulp';
+const { series, parallel } = gulp;
+import {deleteAsync} from 'del';
+import browserSync from 'browser-sync';
+import postcss from 'gulp-postcss';
+import imagemin, { mozjpeg, optipng, svgo } from 'gulp-imagemin';
+import size from 'gulp-size';
+import gulpSass from 'gulp-sass';
+import nodeSass from 'node-sass';
+import data from 'gulp-data';
+import gulpTwig from 'gulp-twig';
+import yaml from 'js-yaml';
+import { glob } from 'glob';
+import plumber from 'gulp-plumber';
+import sourcemaps from 'gulp-sourcemaps';
+import gulpIf from 'gulp-if';
 
-const { rollup } = require('rollup');
-const rollupConfig = require('./rollup.config');
+import { rollup } from 'rollup';
+import { rollupConfig } from './rollup.config.js';
+import { postcssConfig } from './postcss.config.js';
 
-const postcssConfig = require('./postcss.config');
-
+const sass = gulpSass(nodeSass);
 const { cwd } = process;
 
 const DIST_DIR = 'dist';
@@ -64,7 +66,7 @@ const defaultOptions = {
     src: src('twig/**/*.twig'),
     watch: src('twig/**/*.twig'),
     dest: dist(),
-    parser: twig,
+    parser: gulpTwig,
     parserOptions: {
       base: src('twig'),
       filters: []
@@ -106,12 +108,12 @@ const parseData = (dataPaths) => {
   return data;
 };
 
-function createConfig(options = {}) {
+export function createConfig(options = {}) {
   const config = merge({}, defaultOptions, options);
 
   let PROD = false;
 
-  const clean = () => del(config.clean);
+  const clean = () => deleteAsync(config.clean);
 
   const serve = () => browserSync.init(config.browserSyncOptions);
 
@@ -156,11 +158,9 @@ function createConfig(options = {}) {
       .src(config.images.src)
       .pipe(
         imagemin([
-          imagemin.mozjpeg({ progressive: true }),
-          imagemin.optipng({ optimizationLevel: 5 }),
-          imagemin.svgo({
-            plugins: [{ cleanupIDs: false }]
-          })
+          mozjpeg({ progressive: true }),
+          optipng({ optimizationLevel: 5 }),
+          svgo({ cleanupIDs: false })
         ])
       )
       .pipe(gulp.dest(config.images.dest))
@@ -214,13 +214,7 @@ function createConfig(options = {}) {
     }
   };
 
-  const buildTasks = gulp.series([
-    ...config.beforeBuild,
-    gulp.parallel(html, styles, scripts, images),
-    ...config.afterBuild
-  ]);
-
-  const setProd = () => {
+  const setProd = async () => {
     log('Setting production flag');
     process.env.NODE_ENV = 'production';
     PROD = process.env.NODE_ENV === 'production';
@@ -228,13 +222,19 @@ function createConfig(options = {}) {
     return Promise.resolve();
   };
 
-  const build = gulp.series(clean, buildTasks, reportFilesizes);
+  const buildTasks = series([
+    ...config.beforeBuild,
+    parallel(html, styles, scripts, images),
+    ...config.afterBuild
+  ]);
 
-  const dev = gulp.parallel(serve, build, watch);
+  const build = series(clean, buildTasks, reportFilesizes);
+
+  const dev = parallel(build, watch, serve);
 
   return {
     dev,
-    build: gulp.series(setProd, build),
+    build: series(setProd, build),
     clean,
     scripts,
     styles,
@@ -243,4 +243,3 @@ function createConfig(options = {}) {
   };
 }
 
-module.exports = { createConfig };

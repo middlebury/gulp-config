@@ -1,5 +1,6 @@
 {
   "name": "example-wordpress",
+  "type": "module",
   "scripts": {
     "start": "gulp dev",
     "build": "gulp build"
@@ -8,3 +9,4 @@
     "gulp": "^4.0.2"
   }
 }
+ 

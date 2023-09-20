@@ -1,7 +1,7 @@
-const { createConfig } = require('./create-gulp-config');
-const { createJekyllConfig } = require('./create-jekyll-config');
+import { createConfig } from './create-gulp-config.js';
+import { createJekyllConfig } from './create-jekyll-config.js';
 
-module.exports = {
+export {
   createConfig,
   createJekyllConfig
-};
+}

@@ -20,9 +20,15 @@ npm install --save-dev gulp @middlebury/gulp-config
 ```js
 // gulpfile.js
 
-const { createConfig } = require('@middlebury/gulp-config');
+import { createConfig } from '../../src/create-gulp-config.js';
 
-module.exports = createConfig();
+export const { dev, build } = createConfig();
+```
+
+#### Gulp tasks made available by createConfig(): 
+
+```bash
+dev, build, clean, scripts, styles, watch, serve
 ```
 
 ### 3. Add scripts
@@ -86,9 +92,9 @@ Pass your own config to `createConfig(myOptions)` and they will be merged with t
 If you have a jekyll website, you can use a preset gulp config that will run jekyll via command line.
 
 ```js
-const { createJekyllConfig } = require('@middlebury/gulp-config');
+import { createJekyllConfig } from '../../src/create-jekyll-config.js';
 
-module.exports = createJekyllConfig();
+export const { dev, build } = createJekyllConfig();
 ```
 
 The Jekyll config differs slightly like using `_site` as `dist`. See examples directoy how to set up your files.

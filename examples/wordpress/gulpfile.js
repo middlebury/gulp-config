@@ -1,6 +1,6 @@
-const { createConfig } = require('../../');
+import { createConfig } from '../../src/create-gulp-config.js';
 
-module.exports = createConfig({
+export const { dev, build } = createConfig({
   styles: {
     dest: './'
   },

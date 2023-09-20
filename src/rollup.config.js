@@ -1,14 +1,15 @@
-const { babel } = require('@rollup/plugin-babel');
-const { nodeResolve } = require('@rollup/plugin-node-resolve');
-const commonJS = require('@rollup/plugin-commonjs');
-const { uglify } = require('rollup-plugin-uglify');
-const sizes = require('rollup-plugin-sizes');
-const filesize = require('rollup-plugin-filesize');
-const typescript = require('@rollup/plugin-typescript');
+import { babel } from '@rollup/plugin-babel';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
+import commonJS from '@rollup/plugin-commonjs';
+import { uglify } from 'rollup-plugin-uglify';
+import sizes from 'rollup-plugin-sizes';
+import filesize from 'rollup-plugin-filesize';
+import typescript from '@rollup/plugin-typescript';
 
-const browsers = require('./browserslist-config');
+// const browsers = require('./browserslist-config.js');
+const browsers = ['> 1%', 'Firefox ESR', 'not dead', 'not op_mini all'];
 
-module.exports = (input, ts) => {
+export const rollupConfig = (input, ts) => {
   const PROD = process.env.NODE_ENV === 'production';
   let tsBuild = [];
 

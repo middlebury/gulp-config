@@ -20,7 +20,7 @@ npm install --save-dev gulp @middlebury/gulp-config
 ```js
 // gulpfile.js
 
-import { createConfig } from '../../src/create-gulp-config.js';
+import { createConfig } from '@middlebury/gulp-config';
 
 export const { dev, build } = createConfig();
 ```
@@ -92,7 +92,7 @@ Pass your own config to `createConfig(myOptions)` and they will be merged with t
 If you have a jekyll website, you can use a preset gulp config that will run jekyll via command line.
 
 ```js
-import { createJekyllConfig } from '../../src/create-jekyll-config.js';
+import { createJekyllConfig } from '@middlebury/gulp-config';
 
 export const { dev, build } = createJekyllConfig();
 ```

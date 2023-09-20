@@ -1,3 +1,3 @@
-const { createJekyllConfig } = require('../../src');
+import { createJekyllConfig } from '../../src/create-jekyll-config.js';
 
-module.exports = createJekyllConfig();
+export const { dev, build } = createJekyllConfig();

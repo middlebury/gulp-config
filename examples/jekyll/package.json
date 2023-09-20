@@ -1,5 +1,6 @@
 {
   "name": "example-jekyll",
+  "type": "module",
   "scripts": {
     "start": "gulp dev",
     "build": "gulp build"

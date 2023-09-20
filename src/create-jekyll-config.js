@@ -1,11 +1,11 @@
-const gulp = require('gulp');
-const browserSync = require('browser-sync');
-const cp = require('child_process');
-const merge = require('lodash.merge');
+import gulp from 'gulp';
+import browserSync from 'browser-sync';
+import cp from 'node:child_process';
+import merge from 'lodash.merge';
 
-const { createConfig } = require('./create-gulp-config');
+import { createConfig }  from './create-gulp-config.js';
 
-const createJekyllConfig = (options) => {
+export const createJekyllConfig = (options) => {
   const jekyll = (done) => {
     const jekyllOpts = ['build'];
 
@@ -61,8 +61,4 @@ const createJekyllConfig = (options) => {
   const config = merge({}, jekyllOptions, options);
 
   return createConfig(config);
-};
-
-module.exports = {
-  createJekyllConfig
 };

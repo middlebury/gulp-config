@@ -12,7 +12,7 @@ export const createJekyllConfig = (options) => {
     if (process.env.NODE_ENV !== 'production') {
       jekyllOpts.push('--baseurl', '');
     }
-
+    // console.log(jekyllOpts);
     return cp
       .spawn('jekyll', jekyllOpts, {
         stdio: 'inherit'

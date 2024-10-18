@@ -110,7 +110,7 @@ const parseData = (dataPaths) => {
 
 export function createConfig(options = {}) {
   const config = merge({}, defaultOptions, options);
-
+  console.log(config);
   let PROD = false;
 
   const clean = () => deleteAsync(config.clean);
@@ -155,7 +155,7 @@ export function createConfig(options = {}) {
 
   const images = () => {
     return gulp
-      .src(config.images.src)
+      .src(config.images.src, { encoding: false })
       .pipe(
         imagemin([
           mozjpeg({ progressive: true }),

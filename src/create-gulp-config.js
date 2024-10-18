@@ -110,7 +110,7 @@ const parseData = (dataPaths) => {
 
 export function createConfig(options = {}) {
   const config = merge({}, defaultOptions, options);
-  console.log(config);
+  
   let PROD = false;
 
   const clean = () => deleteAsync(config.clean);

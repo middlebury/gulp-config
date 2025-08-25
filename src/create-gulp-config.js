@@ -8,8 +8,8 @@ import browserSync from 'browser-sync';
 import postcss from 'gulp-postcss';
 import imagemin, { mozjpeg, optipng, svgo } from 'gulp-imagemin';
 import size from 'gulp-size';
-import gulpSass from 'gulp-sass';
-import nodeSass from 'node-sass';
+import gulpSass from 'gulp-sass/legacy.js';
+import dartSass from 'sass';
 import data from 'gulp-data';
 import gulpTwig from 'gulp-twig';
 import yaml from 'js-yaml';
@@ -22,7 +22,7 @@ import { rollup } from 'rollup';
 import { rollupConfig } from './rollup.config.js';
 import { postcssConfig } from './postcss.config.js';
 
-const sass = gulpSass(nodeSass);
+const sass = gulpSass(dartSass);
 const { cwd } = process;
 
 const DIST_DIR = 'dist';

@@ -6,6 +6,6 @@
     "build": "gulp build"
   },
   "dependencies": {
-    "gulp": "^4.0.2"
+    "gulp": "^5.0.1"
   }
 }

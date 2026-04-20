@@ -4,7 +4,7 @@
 
 ## Requirements
 
-- Node.js ^18.16.0
+- Node.js ^24.14.1
 
 ## Getting started
 
